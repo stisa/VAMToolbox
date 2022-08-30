@@ -203,13 +203,19 @@ class ImageSeq:
         # video_out.release()
         video_out.close()
 
-    def saveAsImages(self,save_dir: str,image_prefix: str ="image", zero_pad_len: int = 4, image_type: str =".png"):
+    def saveAsImages(self,save_dir: str,image_prefix: str ="image", zero_pad_len: int = 4, image_type: str =".png", verbose=False):
+        print("Saving images as "+image_type+"...")
+        if not os.path.isdir(save_dir):
+                os.makedirs(save_dir)
+                print("Created folder at "+save_dir)
         
         for k, image in enumerate(self.images):
-            save_path = os.path.join(save_dir, image_prefix+"%s"%str(k).zfill(zero_pad_len)+image_type)
+            save_path = os.path.join(save_dir, image_prefix+"%s"%str(k).zfill(zero_pad_len)+image_type)    
             im = Image.fromarray(image)
             im.save(save_path,subsampling=0, quality=100)
-            print("Saving image %s/%s"%(str(k).zfill(zero_pad_len),str(len(self.images)-1).zfill(zero_pad_len)))
+            if verbose:
+                print("Saving image %s/%s"%(str(k).zfill(zero_pad_len),str(len(self.images)-1).zfill(zero_pad_len)))
+        print("Saving images: done")
 
 
 def loadImageSeq(file_name:str):
