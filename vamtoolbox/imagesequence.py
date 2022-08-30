@@ -203,13 +203,13 @@ class ImageSeq:
         # video_out.release()
         video_out.close()
 
-    def saveAsImages(self,save_dir: str,image_prefix: str ="image",image_type: str =".png"):
+    def saveAsImages(self,save_dir: str,image_prefix: str ="image", zero_pad_len: int = 4, image_type: str =".png"):
         
         for k, image in enumerate(self.images):
-            save_path = os.path.join(save_dir, image_prefix+"%s"%str(k).zfill(4)+image_type)
+            save_path = os.path.join(save_dir, image_prefix+"%s"%str(k).zfill(zero_pad_len)+image_type)
             im = Image.fromarray(image)
             im.save(save_path,subsampling=0, quality=100)
-            print("Saving image %s/%s"%(str(k).zfill(4),str(len(self.images)-1).zfill(4)))
+            print("Saving image %s/%s"%(str(k).zfill(zero_pad_len),str(len(self.images)-1).zfill(zero_pad_len)))
 
 
 def loadImageSeq(file_name:str):
